@@ -1,0 +1,14 @@
+D:\Work\APIs\dotnet\corepos\corepos\bin\Debug\netcoreapp2.1\corepos.deps.json
+D:\Work\APIs\dotnet\corepos\corepos\bin\Debug\netcoreapp2.1\corepos.runtimeconfig.json
+D:\Work\APIs\dotnet\corepos\corepos\bin\Debug\netcoreapp2.1\corepos.runtimeconfig.dev.json
+D:\Work\APIs\dotnet\corepos\corepos\bin\Debug\netcoreapp2.1\corepos.dll
+D:\Work\APIs\dotnet\corepos\corepos\bin\Debug\netcoreapp2.1\corepos.pdb
+D:\Work\APIs\dotnet\corepos\corepos\obj\Debug\netcoreapp2.1\corepos.csprojAssemblyReference.cache
+D:\Work\APIs\dotnet\corepos\corepos\obj\Debug\netcoreapp2.1\corepos.csproj.CoreCompileInputs.cache
+D:\Work\APIs\dotnet\corepos\corepos\obj\Debug\netcoreapp2.1\corepos.RazorAssemblyInfo.cache
+D:\Work\APIs\dotnet\corepos\corepos\obj\Debug\netcoreapp2.1\corepos.RazorAssemblyInfo.cs
+D:\Work\APIs\dotnet\corepos\corepos\obj\Debug\netcoreapp2.1\corepos.AssemblyInfoInputs.cache
+D:\Work\APIs\dotnet\corepos\corepos\obj\Debug\netcoreapp2.1\corepos.AssemblyInfo.cs
+D:\Work\APIs\dotnet\corepos\corepos\obj\Debug\netcoreapp2.1\corepos.RazorTargetAssemblyInfo.cache
+D:\Work\APIs\dotnet\corepos\corepos\obj\Debug\netcoreapp2.1\corepos.dll
+D:\Work\APIs\dotnet\corepos\corepos\obj\Debug\netcoreapp2.1\corepos.pdb
