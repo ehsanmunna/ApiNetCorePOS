@@ -16,9 +16,10 @@ namespace corepos.Services
         IEnumerable<Customer> GetCustomers();
         Customer GetCustomerById(string Id);
 
-        //Authorization Repository
-        IEnumerable<PosUserViewDto> GetPosUser();
-        string SavePosUser([FromBody] PosUserFormDto req);
-        PosUserViewDto UpdatePosUser(string Id, [FromBody] PosUserFormDto req);
+        ////Authorization Repository
+        //IEnumerable<PosUser> GetPosUser();
+        //PosUser GetPosUserById(string id);
+        //string SavePosUser([FromBody] PosUserFormDto req);
+        //PosUserViewDto UpdatePosUser(string Id, [FromBody] PosUserFormDto req);
     }
 }

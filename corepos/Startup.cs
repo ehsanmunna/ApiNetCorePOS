@@ -32,6 +32,7 @@ namespace corepos
             var connectionString = Configuration["connectionStrings:DefaultConnection"];
             services.AddDbContext<myPoSContext>(o => o.UseSqlServer(connectionString));
 
+            services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IPOSRepository, POSRepository>();
         }
 
@@ -47,14 +48,14 @@ namespace corepos
 
             app.UseMvc();
 
-            //Mapper.Initialize(res =>
-            //{
-            //    res.CreateMap<Entities.PosUser, Models.PosUserViewDto>()
-            //        .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.Person.FirstName))
-            //        .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.Person.LastName))
-            //        .ForMember(dest => dest.Mobile, opt => opt.MapFrom(src => src.Person.Mobile))
-            //        .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Person.Address));
-            //});
+            Mapper.Initialize(res =>
+            {
+                res.CreateMap<Entities.PosUser, Models.PosUserViewDto>();
+                    //.ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.Person.FirstName))
+                    //.ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.Person.LastName))
+                    //.ForMember(dest => dest.Mobile, opt => opt.MapFrom(src => src.Person.Mobile))
+                    //.ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Person.Address));
+            });
 
             app.Run(async (context) =>
             {

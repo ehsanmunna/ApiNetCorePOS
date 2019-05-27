@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Work\\APIs\\dotnet\\corepos\\corepos\\corepos.csproj": {}
+    "D:\\Work\\APIs\\dotnet\\ApiNetCorePOS\\corepos\\corepos.csproj": {}
   },
   "projects": {
-    "D:\\Work\\APIs\\dotnet\\corepos\\corepos\\corepos.csproj": {
+    "D:\\Work\\APIs\\dotnet\\ApiNetCorePOS\\corepos\\corepos.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Work\\APIs\\dotnet\\corepos\\corepos\\corepos.csproj",
+        "projectUniqueName": "D:\\Work\\APIs\\dotnet\\ApiNetCorePOS\\corepos\\corepos.csproj",
         "projectName": "corepos",
-        "projectPath": "D:\\Work\\APIs\\dotnet\\corepos\\corepos\\corepos.csproj",
+        "projectPath": "D:\\Work\\APIs\\dotnet\\ApiNetCorePOS\\corepos\\corepos.csproj",
         "packagesPath": "C:\\Users\\ASUS-PC\\.nuget\\packages\\",
-        "outputPath": "D:\\Work\\APIs\\dotnet\\corepos\\corepos\\obj\\",
+        "outputPath": "D:\\Work\\APIs\\dotnet\\ApiNetCorePOS\\corepos\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -64,6 +64,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[2.1.9, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[5.4.0, )"
             }
           },
           "imports": [

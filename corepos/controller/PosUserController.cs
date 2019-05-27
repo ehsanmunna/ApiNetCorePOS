@@ -14,8 +14,8 @@ namespace corepos.controller
     [ApiController]
     public class PosUserController : Controller
     {
-        private IPOSRepository _posrepo;
-        public PosUserController(IPOSRepository posrepo)
+        private IAuthRepository _posrepo;
+        public PosUserController(IAuthRepository posrepo)
         {
             _posrepo = posrepo;
         }
@@ -23,7 +23,16 @@ namespace corepos.controller
         public IActionResult Get()
         {
             var user = _posrepo.GetPosUser();
-            return Ok(user);
+            var userView = Mapper.Map<IEnumerable<PosUserViewDto>>(user);
+            return Ok(userView);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(string id)
+        {
+            var user = _posrepo.GetPosUserById(id);
+            var userView = Mapper.Map<PosUserViewDto>(user);
+            return Ok(userView);
         }
 
         [HttpPost]
@@ -37,6 +46,7 @@ namespace corepos.controller
         public IActionResult Update(string id, [FromBody] PosUserFormDto req)
         {
             _posrepo.UpdatePosUser(id, req);
+            
             return NoContent();
         }
     }
