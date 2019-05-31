@@ -174,6 +174,8 @@ namespace corepos.Entities
 
                 entity.Property(e => e.Address).HasColumnType("text");
 
+                entity.Property(e => e.Email).HasMaxLength(100);
+
                 entity.Property(e => e.FirstName).HasMaxLength(50);
 
                 entity.Property(e => e.LastName).HasMaxLength(50);

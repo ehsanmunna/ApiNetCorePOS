@@ -34,6 +34,16 @@ namespace corepos
 
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IPOSRepository, POSRepository>();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder => builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+            });
         }
 
         
@@ -46,7 +56,7 @@ namespace corepos
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
+            
 
             Mapper.Initialize(res =>
             {
@@ -57,6 +67,8 @@ namespace corepos
                     //.ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Person.Address));
             });
 
+            app.UseCors("AllowAll");
+            app.UseMvc();
             app.Run(async (context) =>
             {
                 await context.Response.WriteAsync("MVC didn't find anything!!");

@@ -1,24 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace corepos.Entities
+namespace corepos.Models
 {
-    public partial class Person
+    public class PersonDto
     {
-        public Person()
-        {
-            Customer = new HashSet<Customer>();
-            PosUser = new HashSet<PosUser>();
-        }
-
         public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Mobile { get; set; }
         public string Address { get; set; }
         public string Email { get; set; }
-
-        public ICollection<Customer> Customer { get; set; }
-        public ICollection<PosUser> PosUser { get; set; }
     }
 }
