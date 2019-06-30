@@ -37,6 +37,52 @@ namespace corepos.Services
             return _poscontext.Customer.FirstOrDefault(p => p.CustId == Id);
         }
 
+        public IEnumerable<Product> GetProduct()
+        {
+            return _poscontext.Product.ToList();
+        }
+        public Product SaveProduct([FromBody] Product req)
+        {
+
+            var _idGen = new Genetate();
+            
+            var product = new Product
+            {
+                ProdId = _idGen.GenerateNumber("prod"),
+                Name = req.Name,
+                Description = req.Description
+            };
+            _poscontext.Product.Add(product);
+            _poscontext.SaveChanges();
+            //_poscontext.Person
+            return product;
+        }
+        public Product UpdateProduct(string id, [FromBody] Product req)
+        {
+
+            var product = new Product
+            {
+                ProdId = id,
+                Name = req.Name,
+                Description = req.Description
+            };
+            _poscontext.Product.Update(product);
+            _poscontext.SaveChanges();
+            //_poscontext.Person
+            return product;
+        }
+        public Product GetProductById(string Id)
+        {
+            return _poscontext.Product.FirstOrDefault(p => p.ProdId == Id);
+        }
+        public Product DeleteProduct(string Id)
+        {
+            var prod = GetProductById(Id);
+            _poscontext.Product.Remove(prod);
+            _poscontext.SaveChanges();
+            return prod;
+        }
+
         //Authorization Repository
         //public IEnumerable<PosUser> GetPosUser()
         //{
@@ -102,6 +148,6 @@ namespace corepos.Services
         //    return req;
         //}
 
-        
+
     }
 }
