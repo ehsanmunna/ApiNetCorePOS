@@ -43,11 +43,11 @@ namespace corepos.controller
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(string id, [FromBody] PosUserFormDto req)
+        public IActionResult Update(string id, [FromBody] PosUserViewDto req)
         {
-            _posrepo.UpdatePosUser(id, req);
+            var data = _posrepo.UpdatePosUser(id, req);
             
-            return NoContent();
+            return Ok(data);
         }
     }
 }

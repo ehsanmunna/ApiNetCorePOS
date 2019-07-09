@@ -83,71 +83,49 @@ namespace corepos.Services
             return prod;
         }
 
-        //Authorization Repository
-        //public IEnumerable<PosUser> GetPosUser()
-        //{
-        //    var user = _poscontext.PosUser
-        //        .Include(s => s.Person)
-        //    .ToList();
-        //    return user;
-        //}
+        public IEnumerable<Item> GetItem()
+        {
+            return _poscontext.Item.Include(p=> p.Product).ToList();
+        }
+        public string SaveItem([FromBody] Item req)
+        {
 
-        //public PosUser GetPosUserById(string id)
-        //{
-        //    var user = _poscontext.PosUser
-        //        .Include(s => s.Person)
-        //        .FirstOrDefault(s => s.UserId == id);
-        //    return user;
-        //}
+            var _idGen = new Genetate();
+            var itemId = _idGen.GenerateNumber("I");
+            var product = SaveProduct(req.Product);
+            var nItem = new Item
+            {
+                ItemId = itemId,
+                ProductId = product.ProdId,
+                CostPrice = req.CostPrice,
+                SalsePrice = req.SalsePrice
+            };
+            
 
-        //public string SavePosUser([FromBody] PosUserFormDto req)
-        //{
-        //    var _idGen = new Genetate();
-        //    var personId = _idGen.GenerateNumber("P");
-        //    var person = new Person
-        //    {
-        //        Id = personId,
-        //        FirstName = req.Person.FirstName,
-        //        LastName = req.Person.LastName,
-        //        Mobile = req.Person.Mobile,
-        //        Address = req.Person.Address
-        //    };
-        //    _poscontext.Person.Add(person);
+            _poscontext.Item.Add(nItem);
+            _poscontext.SaveChanges();
+            return itemId;
+        }
+        public Item UpdateItem(string id, [FromBody] Item req)
+        {
 
-        //    var userId = _idGen.GenerateNumber("U");
-        //    var user = new PosUser
-        //    {
-        //        UserId = userId,
-        //        PersonId = personId,
-        //        UserName = req.UserName,
-        //        Password = req.Password
-        //    };
-        //    _poscontext.PosUser.Add(user);
-        //    _poscontext.SaveChanges();
-        //    //_poscontext.Person
-        //    return userId;
-        //}
-
-        //public PosUserViewDto UpdatePosUser(string Id, [FromBody] PosUserFormDto req)
-        //{
-        //    var person = new Person
-        //    {
-        //        FirstName = req.Person.FirstName,
-        //        LastName = req.Person.LastName,
-        //        Mobile = req.Person.Mobile,
-        //        Address = req.Person.Address
-        //    };
-        //    _poscontext.Person.Update(person);
-
-        //    var user = new PosUser
-        //    {
-        //        UserName = req.UserName
-        //    };
-        //    _poscontext.PosUser.Update(user);
-        //    _poscontext.SaveChanges();
-        //    return req;
-        //}
-
+            UpdateProduct(req.ProductId, req.Product);
+            _poscontext.Item.Update(req);
+            _poscontext.SaveChanges();
+            //_poscontext.Person
+            return req;
+        }
+        public Item GetItemById(string Id)
+        {
+            return _poscontext.Item.FirstOrDefault(p => p.ItemId == Id);
+        }
+        public Item DeleteItem(string Id)
+        {
+            var prod = GetItemById(Id);
+            _poscontext.Item.Remove(prod);
+            _poscontext.SaveChanges();
+            return prod;
+        }
 
     }
 }

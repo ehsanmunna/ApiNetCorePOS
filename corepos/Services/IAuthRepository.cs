@@ -15,7 +15,7 @@ namespace corepos.Services
         PosUser GetPosUserById(string id);
         PosUser GetPosUserByUserName(string username);
         string SavePosUser([FromBody] PosUserFormDto req);
-        PosUserViewDto UpdatePosUser(string Id, [FromBody] PosUserFormDto req);
+        PosUserViewDto UpdatePosUser(string Id, [FromBody] PosUserViewDto req);
         //bool Login([FromBody] LoginDto req);
     }
 }

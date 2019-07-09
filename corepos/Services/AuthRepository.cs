@@ -89,20 +89,24 @@ namespace corepos.Services
 
         
 
-        public PosUserViewDto UpdatePosUser(string Id, [FromBody] PosUserFormDto req)
+        public PosUserViewDto UpdatePosUser(string Id, [FromBody] PosUserViewDto req)
         {
             var person = new Person
             {
+                Id = req.PersonId,
                 FirstName = req.Person.FirstName,
                 LastName = req.Person.LastName,
                 Mobile = req.Person.Mobile,
-                Address = req.Person.Address
+                Address = req.Person.Address,
+                Email = req.Person.Email
             };
             _poscontext.Person.Update(person);
 
             var user = new PosUser
             {
-                UserName = req.UserName
+                UserId = req.UserId,
+                UserName = req.UserName,
+                PersonId = req.PersonId
             };
             _poscontext.PosUser.Update(user);
             _poscontext.SaveChanges();
