@@ -10,10 +10,10 @@ namespace corepos.controller
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ItemController : ControllerBase
+    public class StockController : ControllerBase
     {
         private IPOSRepository _posrepo;
-        public ItemController(IPOSRepository posrepo)
+        public StockController(IPOSRepository posrepo)
         {
             _posrepo = posrepo;
         }
@@ -21,29 +21,29 @@ namespace corepos.controller
         [HttpGet]
         public ActionResult Get()
         {
-            var persons = _posrepo.GetItem();
+            var persons = _posrepo.GetStock();
             return new JsonResult(persons);
         }
 
         [HttpPost]
-        public ActionResult Save([FromBody] Item data)
+        public ActionResult Save([FromBody] Stock data)
         {
-            var item = _posrepo.SaveItem(data);
-            return new JsonResult(item);
+            var Stock = _posrepo.SaveStock(data);
+            return new JsonResult(Stock);
         }
 
         [HttpPut("{id}")]
-        public ActionResult Update(string id, [FromBody] Item data)
+        public ActionResult Update(string id, [FromBody] Stock data)
         {
-            var item = _posrepo.UpdateItem(id, data);
-            return new JsonResult(item);
+            var Stock = _posrepo.UpdateStock(id, data);
+            return new JsonResult(Stock);
         }
 
         [HttpDelete("{id}")]
         public ActionResult Delete(string id)
         {
-            var item = _posrepo.DeleteItem(id);
-            return new JsonResult(item);
+            var Stock = _posrepo.DeleteStock(id);
+            return new JsonResult(Stock);
         }
 
     }

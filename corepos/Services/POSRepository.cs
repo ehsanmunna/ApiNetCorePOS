@@ -29,7 +29,7 @@ namespace corepos.Services
 
         public IEnumerable<Customer> GetCustomers()
         {
-            return _poscontext.Customer.ToList();
+            return _poscontext.Customer.Include(p=>p.Person).ToList();
         }
 
         public Customer GetCustomerById(string Id)
@@ -45,31 +45,33 @@ namespace corepos.Services
         {
 
             var _idGen = new Genetate();
-            
-            var product = new Product
-            {
-                ProdId = _idGen.GenerateNumber("prod"),
-                Name = req.Name,
-                Description = req.Description
-            };
-            _poscontext.Product.Add(product);
+            req.ProdId = _idGen.GenerateNumber("prod");
+            //var product = new Product
+            //{
+            //    ProdId = _idGen.GenerateNumber("prod"),
+            //    Name = req.Name,
+            //    RetailPrice = req.RetailPrice,
+            //    WholeSalePrice = req.WholeSalePrice,
+            //    Description = req.Description
+            //};
+            _poscontext.Product.Add(req);
             _poscontext.SaveChanges();
             //_poscontext.Person
-            return product;
+            return req;
         }
         public Product UpdateProduct(string id, [FromBody] Product req)
         {
 
-            var product = new Product
-            {
-                ProdId = id,
-                Name = req.Name,
-                Description = req.Description
-            };
-            _poscontext.Product.Update(product);
+            //var product = new Product
+            //{
+            //    ProdId = id,
+            //    Name = req.Name,
+            //    Description = req.Description
+            //};
+            _poscontext.Product.Update(req);
             _poscontext.SaveChanges();
             //_poscontext.Person
-            return product;
+            return req;
         }
         public Product GetProductById(string Id)
         {
@@ -83,49 +85,48 @@ namespace corepos.Services
             return prod;
         }
 
-        public IEnumerable<Item> GetItem()
+        public IEnumerable<Stock> GetStock()
         {
-            return _poscontext.Item.Include(p=> p.Product).ToList();
+            return _poscontext.Stock.Include(p=> p.Product).ToList();
         }
-        public string SaveItem([FromBody] Item req)
+        public string SaveStock([FromBody] Stock req)
         {
 
             var _idGen = new Genetate();
             var itemId = _idGen.GenerateNumber("I");
             var product = SaveProduct(req.Product);
-            var nItem = new Item
+            var nItem = new Stock
             {
-                ItemId = itemId,
-                ProductId = product.ProdId,
-                CostPrice = req.CostPrice,
-                SalsePrice = req.SalsePrice
+                StockId = itemId,
+                ProductId = product.ProdId
             };
             
 
-            _poscontext.Item.Add(nItem);
+            _poscontext.Stock.Add(nItem);
             _poscontext.SaveChanges();
             return itemId;
         }
-        public Item UpdateItem(string id, [FromBody] Item req)
+        public Stock UpdateStock(string id, [FromBody] Stock req)
         {
 
             UpdateProduct(req.ProductId, req.Product);
-            _poscontext.Item.Update(req);
+            _poscontext.Stock.Update(req);
             _poscontext.SaveChanges();
             //_poscontext.Person
             return req;
         }
-        public Item GetItemById(string Id)
+        public Stock GetStockById(string Id)
         {
-            return _poscontext.Item.FirstOrDefault(p => p.ItemId == Id);
+            return _poscontext.Stock.FirstOrDefault(p => p.StockId == Id);
         }
-        public Item DeleteItem(string Id)
+        public Stock DeleteStock(string Id)
         {
-            var prod = GetItemById(Id);
-            _poscontext.Item.Remove(prod);
+            var prod = GetStockById(Id);
+            _poscontext.Stock.Remove(prod);
             _poscontext.SaveChanges();
             return prod;
         }
 
+        
     }
 }

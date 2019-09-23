@@ -21,7 +21,6 @@ namespace corepos.controller
         [HttpGet]
         public ActionResult Get()
         {
-            var customerList = new List<Customer>();
             var customers = _posrepo.GetCustomers();
 
             //foreach (var item in customers)

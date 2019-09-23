@@ -22,11 +22,11 @@ namespace corepos.Services
         Product UpdateProduct(string id, [FromBody] Product data);
         Product DeleteProduct(string id);
 
-        IEnumerable<Item> GetItem();
-        Item GetItemById(string Id);
-        string SaveItem([FromBody] Item data);
-        Item UpdateItem(string id, [FromBody] Item data);
-        Item DeleteItem(string id);
+        IEnumerable<Stock> GetStock();
+        Stock GetStockById(string Id);
+        string SaveStock([FromBody] Stock data);
+        Stock UpdateStock(string id, [FromBody] Stock data);
+        Stock DeleteStock(string id);
         ////Authorization Repository
         //IEnumerable<PosUser> GetPosUser();
         //PosUser GetPosUserById(string id);
