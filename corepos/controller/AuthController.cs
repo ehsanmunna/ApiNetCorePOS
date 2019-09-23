@@ -51,7 +51,7 @@ namespace corepos.controller
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenStr = tokenHandler.WriteToken(token);
-            var tokenObj = new { token = tokenStr, userInfo = userView};
+            var tokenObj = new { accessToken = tokenStr, user = userView, expiration = tokenDescriptor.Expires};
 
 
             return Ok(tokenObj);

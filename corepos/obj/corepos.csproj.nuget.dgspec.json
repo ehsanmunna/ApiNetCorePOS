@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Work\\APIs\\dotnet\\ApiNetCorePOS\\corepos\\corepos.csproj": {}
+    "H:\\Back-End\\DotNetCore\\ApiNetCorePOS\\corepos\\corepos.csproj": {}
   },
   "projects": {
-    "D:\\Work\\APIs\\dotnet\\ApiNetCorePOS\\corepos\\corepos.csproj": {
+    "H:\\Back-End\\DotNetCore\\ApiNetCorePOS\\corepos\\corepos.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Work\\APIs\\dotnet\\ApiNetCorePOS\\corepos\\corepos.csproj",
+        "projectUniqueName": "H:\\Back-End\\DotNetCore\\ApiNetCorePOS\\corepos\\corepos.csproj",
         "projectName": "corepos",
-        "projectPath": "D:\\Work\\APIs\\dotnet\\ApiNetCorePOS\\corepos\\corepos.csproj",
-        "packagesPath": "C:\\Users\\ASUS-PC\\.nuget\\packages\\",
-        "outputPath": "D:\\Work\\APIs\\dotnet\\ApiNetCorePOS\\corepos\\obj\\",
+        "projectPath": "H:\\Back-End\\DotNetCore\\ApiNetCorePOS\\corepos\\corepos.csproj",
+        "packagesPath": "C:\\Users\\EM\\.nuget\\packages\\",
+        "outputPath": "H:\\Back-End\\DotNetCore\\ApiNetCorePOS\\corepos\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\ASUS-PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\EM\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -57,6 +57,7 @@
               "version": "[2.2.0, )"
             },
             "Microsoft.NETCore.App": {
+              "suppressParent": "All",
               "target": "Package",
               "version": "[2.1.0, )",
               "autoReferenced": true
