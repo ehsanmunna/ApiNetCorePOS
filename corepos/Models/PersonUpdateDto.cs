@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace corepos.Models
 {
-    public class PersonDto
+    public class PersonUpdateDto
     {
-        public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Mobile { get; set; }

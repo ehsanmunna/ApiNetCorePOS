@@ -7,6 +7,7 @@ using corepos.Models;
 using corepos.Helper;
 using corepos.Services;
 using AutoMapper;
+using corepos.Entities;
 
 namespace corepos.controller
 {
@@ -27,7 +28,7 @@ namespace corepos.controller
             return Ok(userView);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetPosUserById")]
         public IActionResult GetById(string id)
         {
             var user = _posrepo.GetPosUserById(id);
@@ -36,18 +37,29 @@ namespace corepos.controller
         }
 
         [HttpPost]
-        public IActionResult Save([FromBody] PosUserFormDto req)
+        public IActionResult Save([FromBody] PosUserCreateDto req)
         {
-            _posrepo.SavePosUser(req);
-            return NoContent();
+            if (req == null)
+            {
+                return BadRequest();
+            }
+            var userEntity = Mapper.Map<PosUser>(req);
+            _posrepo.SavePosUser(userEntity);
+            return CreatedAtRoute("GetPosUserById", new { id = userEntity.UserId }, userEntity);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(string id, [FromBody] PosUserFormDto req)
+        public IActionResult Update(string id, [FromBody] PosUserUpdateDto req)
         {
-            _posrepo.UpdatePosUser(id, req);
-            
-            return NoContent();
+            if (req == null)
+            {
+                return BadRequest();
+            }
+            var userbyId = _posrepo.GetPosUserById(id);
+            Mapper.Map(req, userbyId);
+            _posrepo.UpdatePosUser(userbyId);
+
+            return StatusCode(204);
         }
     }
 }

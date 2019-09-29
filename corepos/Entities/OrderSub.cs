@@ -12,7 +12,7 @@ namespace corepos.Entities
         public decimal? Quantity { get; set; }
         public decimal? Discount { get; set; }
 
-        public Item Item { get; set; }
+        public Stock Item { get; set; }
         public Order Order { get; set; }
     }
 }

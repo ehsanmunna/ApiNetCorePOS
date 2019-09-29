@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using corepos.Services;
 using corepos.Entities;
 using AutoMapper;
+using corepos.Models;
 
 namespace corepos
 {
@@ -26,7 +27,12 @@ namespace corepos
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(options =>
+                    options
+                    .SerializerSettings
+                    .ReferenceLoopHandling =
+                    Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             //services.AddDbContext<PersonContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             var connectionString = Configuration["connectionStrings:DefaultConnection"];
@@ -60,11 +66,12 @@ namespace corepos
 
             Mapper.Initialize(res =>
             {
-                res.CreateMap<Entities.PosUser, Models.PosUserViewDto>();
-                    //.ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.Person.FirstName))
-                    //.ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.Person.LastName))
-                    //.ForMember(dest => dest.Mobile, opt => opt.MapFrom(src => src.Person.Mobile))
-                    //.ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Person.Address));
+                res.CreateMap<PosUser, PosUserViewDto>();
+                res.CreateMap<PosUserCreateDto, PosUser>();
+                res.CreateMap<PosUserUpdateDto, PosUser>();
+                res.CreateMap<PersonViewDto, Person>();
+                res.CreateMap<PersonUpdateDto, Person>();
+                res.CreateMap<CustomerViewDto, Customer>();
             });
 
             app.UseCors("AllowAll");

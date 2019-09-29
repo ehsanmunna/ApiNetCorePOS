@@ -16,7 +16,6 @@ namespace corepos.Entities
         }
 
         public virtual DbSet<Customer> Customer { get; set; }
-        public virtual DbSet<Item> Item { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderSub> OrderSub { get; set; }
         public virtual DbSet<Permision> Permision { get; set; }
@@ -25,6 +24,7 @@ namespace corepos.Entities
         public virtual DbSet<PosUser> PosUser { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<RoleUserMap> RoleUserMap { get; set; }
+        public virtual DbSet<Stock> Stock { get; set; }
         public virtual DbSet<UserPermision> UserPermision { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -63,37 +63,6 @@ namespace corepos.Entities
                     .WithMany(p => p.Customer)
                     .HasForeignKey(d => d.PersonId)
                     .HasConstraintName("FK_Customer_Person");
-            });
-
-            modelBuilder.Entity<Item>(entity =>
-            {
-                entity.Property(e => e.ItemId)
-                    .HasColumnName("item_id")
-                    .HasMaxLength(50)
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.CostPrice)
-                    .HasColumnName("costPrice")
-                    .HasColumnType("decimal(18, 0)");
-
-                entity.Property(e => e.Description).HasColumnType("text");
-
-                entity.Property(e => e.ProductId)
-                    .IsRequired()
-                    .HasColumnName("product_id")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Reorderlavel).HasColumnName("reorderlavel");
-
-                entity.Property(e => e.SalsePrice)
-                    .HasColumnName("salsePrice")
-                    .HasColumnType("decimal(18, 0)");
-
-                entity.HasOne(d => d.Product)
-                    .WithMany(p => p.Item)
-                    .HasForeignKey(d => d.ProductId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Item_Product");
             });
 
             modelBuilder.Entity<Order>(entity =>
@@ -241,6 +210,10 @@ namespace corepos.Entities
                 entity.Property(e => e.Description).HasColumnType("text");
 
                 entity.Property(e => e.Name).HasMaxLength(150);
+
+                entity.Property(e => e.RetailPrice).HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.WholeSalePrice).HasColumnType("decimal(18, 0)");
             });
 
             modelBuilder.Entity<RoleUserMap>(entity =>
@@ -274,6 +247,27 @@ namespace corepos.Entities
                     .WithMany(p => p.RoleUserMap)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_RoleUserMap_posUser");
+            });
+
+            modelBuilder.Entity<Stock>(entity =>
+            {
+                entity.Property(e => e.StockId)
+                    .HasColumnName("stock_id")
+                    .HasMaxLength(50)
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.ProductId)
+                    .IsRequired()
+                    .HasColumnName("product_id")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Reorderlavel).HasColumnName("reorderlavel");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.Stock)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Item_Product");
             });
 
             modelBuilder.Entity<UserPermision>(entity =>

@@ -15,12 +15,20 @@ namespace corepos.Services
 
         IEnumerable<Customer> GetCustomers();
         Customer GetCustomerById(string Id);
+        Customer SaveCustomer([FromBody] Customer data);
+        Customer UpdateCustomer([FromBody] Customer data);
 
         IEnumerable<Product> GetProduct();
         Product GetProductById(string Id);
         Product SaveProduct([FromBody] Product data);
         Product UpdateProduct(string id, [FromBody] Product data);
         Product DeleteProduct(string id);
+
+        IEnumerable<Stock> GetStock();
+        Stock GetStockById(string Id);
+        string SaveStock([FromBody] Stock data);
+        Stock UpdateStock(string id, [FromBody] Stock data);
+        Stock DeleteStock(string id);
         ////Authorization Repository
         //IEnumerable<PosUser> GetPosUser();
         //PosUser GetPosUserById(string id);

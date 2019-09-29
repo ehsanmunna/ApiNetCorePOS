@@ -59,52 +59,24 @@ namespace corepos.Services
         //    return isLogged;
         //}
 
-        public string SavePosUser([FromBody] PosUserFormDto req)
+        public string SavePosUser([FromBody] PosUser req)
         {
             var _idGen = new Genetate();
             var personId = _idGen.GenerateNumber("P");
-            var person = new Person
-            {
-                Id = personId,
-                FirstName = req.Person.FirstName,
-                LastName = req.Person.LastName,
-                Mobile = req.Person.Mobile,
-                Address = req.Person.Address
-            };
-            _poscontext.Person.Add(person);
-
-            var userId = _idGen.GenerateNumber("U");
-            var user = new PosUser
-            {
-                UserId = userId,
-                PersonId = personId,
-                UserName = req.UserName,
-                Password = req.Password
-            };
-            _poscontext.PosUser.Add(user);
+            req.PersonId = personId;
+            req.Person.Id = personId;
+            req.UserId = _idGen.GenerateNumber("U");
+            //_poscontext.Person.Add(req.Person);
+            _poscontext.PosUser.Add(req);
             _poscontext.SaveChanges();
-            //_poscontext.Person
-            return userId;
+            return req.UserId;
         }
 
         
 
-        public PosUserViewDto UpdatePosUser(string Id, [FromBody] PosUserFormDto req)
+        public PosUser UpdatePosUser([FromBody] PosUser req)
         {
-            var person = new Person
-            {
-                FirstName = req.Person.FirstName,
-                LastName = req.Person.LastName,
-                Mobile = req.Person.Mobile,
-                Address = req.Person.Address
-            };
-            _poscontext.Person.Update(person);
-
-            var user = new PosUser
-            {
-                UserName = req.UserName
-            };
-            _poscontext.PosUser.Update(user);
+            _poscontext.PosUser.Update(req);
             _poscontext.SaveChanges();
             return req;
         }

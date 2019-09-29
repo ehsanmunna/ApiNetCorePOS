@@ -1,4 +1,6 @@
-﻿using corepos.Entities;
+﻿using AutoMapper;
+using corepos.Entities;
+using corepos.Models;
 using corepos.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,32 +21,46 @@ namespace corepos.controller
         }
         // GET: api/<controller>
         [HttpGet]
-        public ActionResult Get()
+        public IActionResult Get()
         {
-            var customerList = new List<Customer>();
-            var customers = _posrepo.GetCustomers();
-
-            //foreach (var item in customers)
-            //{
-            //    customerList.Add(new Customer()
-            //    {
-            //        custId = item.CustId,
-            //        person_id = item.PersonId,
-            //        Person = _posrepo.GetPersonById(item.person_id)
-            //    });
-            //}
-
-            return new JsonResult(customers);
+            var user = _posrepo.GetCustomers();
+            var userView = Mapper.Map<IEnumerable<CustomerViewDto>>(user);
+            return Ok(userView);
         }
 
 
         // GET api/<controller>/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetCustomerById")]
         public ActionResult Get(string id)
         {
-            var customer = _posrepo.GetCustomerById(id);
-            customer.Person = _posrepo.GetPersonById(customer.PersonId);
-            return new JsonResult(customer);
+            var user = _posrepo.GetCustomerById(id);
+            var userView = Mapper.Map<CustomerViewDto>(user);
+            return Ok(userView);
+        }
+        [HttpPost]
+        public IActionResult Save([FromBody] CustomerCreateDto req)
+        {
+            if (req == null)
+            {
+                return BadRequest();
+            }
+            var userEntity = Mapper.Map<Customer>(req);
+            _posrepo.SaveCustomer(userEntity);
+            return CreatedAtRoute("GetCustomerById", new { id = userEntity.CustId }, userEntity);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(string id, [FromBody] Customer req)
+        {
+            if (req == null)
+            {
+                return BadRequest();
+            }
+            var userbyId = _posrepo.GetCustomerById(id);
+            Mapper.Map(req, userbyId);
+            _posrepo.UpdateCustomer(userbyId);
+
+            return StatusCode(204);
         }
     }
 }
