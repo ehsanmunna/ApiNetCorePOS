@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using corepos.Entities;
+using corepos.Models.Product;
 using corepos.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,21 +24,28 @@ namespace corepos.controller
         public IActionResult Get()
         {
             var products = _posrepo.GetProduct();
-            return Ok(products);
+            var listView = Mapper.Map<IEnumerable<ProductViewDto>>(products);
+            return Ok(listView);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetProductById")]
         public ActionResult Get(string id)
         {
-            var product = _posrepo.GetProductById(id);
-            return new JsonResult(product);
+            var products = _posrepo.GetProductById(id);
+            var listView = Mapper.Map<ProductViewDto>(products);
+            return Ok(listView);
         }
 
         [HttpPost]
-        public ActionResult Save([FromBody] Product data)
+        public ActionResult Save([FromBody] Product req)
         {
-            var product = _posrepo.SaveProduct(data);
-            return new JsonResult(product);
+            if (req == null)
+            {
+                return BadRequest();
+            }
+            var productEntity = Mapper.Map<Product>(req);
+            _posrepo.SaveProduct(productEntity);
+            return CreatedAtRoute("GetProductById", new { id = productEntity.ProdId }, productEntity);
         }
         [HttpPut("{id}")]
         public ActionResult Update(string id, [FromBody] Product data)

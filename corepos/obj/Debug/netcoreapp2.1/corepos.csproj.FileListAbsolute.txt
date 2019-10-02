@@ -45,7 +45,6 @@ H:\Back-End\DotNetCore\ApiNetCorePOS\corepos\bin\Debug\netcoreapp2.1\corepos.run
 H:\Back-End\DotNetCore\ApiNetCorePOS\corepos\bin\Debug\netcoreapp2.1\corepos.runtimeconfig.dev.json
 H:\Back-End\DotNetCore\ApiNetCorePOS\corepos\bin\Debug\netcoreapp2.1\corepos.dll
 H:\Back-End\DotNetCore\ApiNetCorePOS\corepos\bin\Debug\netcoreapp2.1\corepos.pdb
-H:\Back-End\DotNetCore\ApiNetCorePOS\corepos\obj\Debug\netcoreapp2.1\corepos.csprojAssemblyReference.cache
 H:\Back-End\DotNetCore\ApiNetCorePOS\corepos\obj\Debug\netcoreapp2.1\corepos.csproj.CoreCompileInputs.cache
 H:\Back-End\DotNetCore\ApiNetCorePOS\corepos\obj\Debug\netcoreapp2.1\corepos.RazorAssemblyInfo.cache
 H:\Back-End\DotNetCore\ApiNetCorePOS\corepos\obj\Debug\netcoreapp2.1\corepos.RazorAssemblyInfo.cs
@@ -54,3 +53,4 @@ H:\Back-End\DotNetCore\ApiNetCorePOS\corepos\obj\Debug\netcoreapp2.1\corepos.Ass
 H:\Back-End\DotNetCore\ApiNetCorePOS\corepos\obj\Debug\netcoreapp2.1\corepos.RazorTargetAssemblyInfo.cache
 H:\Back-End\DotNetCore\ApiNetCorePOS\corepos\obj\Debug\netcoreapp2.1\corepos.dll
 H:\Back-End\DotNetCore\ApiNetCorePOS\corepos\obj\Debug\netcoreapp2.1\corepos.pdb
+H:\Back-End\DotNetCore\ApiNetCorePOS\corepos\obj\Debug\netcoreapp2.1\corepos.csprojAssemblyReference.cache

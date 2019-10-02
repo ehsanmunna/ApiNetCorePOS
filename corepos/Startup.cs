@@ -12,6 +12,10 @@ using corepos.Services;
 using corepos.Entities;
 using AutoMapper;
 using corepos.Models;
+using corepos.Models.Product;
+using corepos.Models.Sales;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace corepos
 {
@@ -50,6 +54,22 @@ namespace corepos
                         .AllowAnyHeader()
                         .AllowCredentials());
             });
+
+            services.AddSwaggerGen(opt =>
+            {
+                opt.DescribeAllEnumsAsStrings();
+                opt.SwaggerDoc("v1", new Info
+                {
+                    Title = "POS System",
+                    Version = "2.0",
+                    Contact = new Contact
+                    {
+                        Name = "ehsan munna"
+                    },
+                    Description = "My POS System"
+                });
+            });
+
         }
 
         
@@ -67,15 +87,38 @@ namespace corepos
             Mapper.Initialize(res =>
             {
                 res.CreateMap<PosUser, PosUserViewDto>();
-                res.CreateMap<PosUserCreateDto, PosUser>();
+
+                res.CreateMap<ProductGroupCreateDto, PosUser>();
                 res.CreateMap<PosUserUpdateDto, PosUser>();
+
                 res.CreateMap<PersonViewDto, Person>();
                 res.CreateMap<PersonUpdateDto, Person>();
+
                 res.CreateMap<CustomerViewDto, Customer>();
+
+                res.CreateMap<MeasurementUnit, MesurementUnitViewDto>();
+                res.CreateMap<MesurementUnitCreateDto, MeasurementUnit>();
+
+                res.CreateMap<Supplier, SupplierViewDto>();
+                res.CreateMap<SupplierCreateDto, Supplier>();
+
+                res.CreateMap<Product, ProductViewDto>();
+                res.CreateMap<ProductCreateDto, Product>();
+
+                res.CreateMap<SalesMain, SalesViewDto>();
+                res.CreateMap<SalseCreateDto, SalesMain>();
             });
+
 
             app.UseCors("AllowAll");
             app.UseMvc();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(s =>
+            {
+                s.SwaggerEndpoint("/swagger/v1/swagger.json", "api V1");
+            });
+
             app.Run(async (context) =>
             {
                 await context.Response.WriteAsync("MVC didn't find anything!!");

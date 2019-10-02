@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace corepos.Models
 {
-    public class PosUserCreateDto : PosUserViewDto
+    public class ProductGroupCreateDto : PosUserViewDto
     {
         public string Password { get; set; }
 

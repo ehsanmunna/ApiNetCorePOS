@@ -37,7 +37,7 @@ namespace corepos.controller
         }
 
         [HttpPost]
-        public IActionResult Save([FromBody] PosUserCreateDto req)
+        public IActionResult Save([FromBody] ProductGroupCreateDto req)
         {
             if (req == null)
             {

@@ -9,6 +9,7 @@ namespace corepos.Entities
         {
             Customer = new HashSet<Customer>();
             PosUser = new HashSet<PosUser>();
+            Supplier = new HashSet<Supplier>();
         }
 
         public string Id { get; set; }
@@ -20,5 +21,6 @@ namespace corepos.Entities
 
         public ICollection<Customer> Customer { get; set; }
         public ICollection<PosUser> PosUser { get; set; }
+        public ICollection<Supplier> Supplier { get; set; }
     }
 }

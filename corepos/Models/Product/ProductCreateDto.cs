@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace corepos.Entities
+namespace corepos.Models.Product
 {
-    public partial class Product
+    public class ProductCreateDto
     {
-        public Product()
-        {
-            SalesSub = new HashSet<SalesSub>();
-        }
-
         public string ProdId { get; set; }
         public string Name { get; set; }
-        public decimal? Quantity { get; set; }
         public int GroupId { get; set; }
         public int UnitId { get; set; }
         public string SupplierId { get; set; }
@@ -20,10 +16,5 @@ namespace corepos.Entities
         public decimal SalsePrice { get; set; }
         public decimal? Discount { get; set; }
         public string Description { get; set; }
-
-        public ProductGroup Group { get; set; }
-        public Supplier Supplier { get; set; }
-        public MeasurementUnit Unit { get; set; }
-        public ICollection<SalesSub> SalesSub { get; set; }
     }
 }

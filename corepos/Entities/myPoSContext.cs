@@ -16,15 +16,17 @@ namespace corepos.Entities
         }
 
         public virtual DbSet<Customer> Customer { get; set; }
-        public virtual DbSet<Order> Order { get; set; }
-        public virtual DbSet<OrderSub> OrderSub { get; set; }
+        public virtual DbSet<MeasurementUnit> MeasurementUnit { get; set; }
         public virtual DbSet<Permision> Permision { get; set; }
         public virtual DbSet<Person> Person { get; set; }
         public virtual DbSet<PosRole> PosRole { get; set; }
         public virtual DbSet<PosUser> PosUser { get; set; }
         public virtual DbSet<Product> Product { get; set; }
+        public virtual DbSet<ProductGroup> ProductGroup { get; set; }
         public virtual DbSet<RoleUserMap> RoleUserMap { get; set; }
-        public virtual DbSet<Stock> Stock { get; set; }
+        public virtual DbSet<SalesMain> SalesMain { get; set; }
+        public virtual DbSet<SalesSub> SalesSub { get; set; }
+        public virtual DbSet<Supplier> Supplier { get; set; }
         public virtual DbSet<UserPermision> UserPermision { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -32,7 +34,7 @@ namespace corepos.Entities
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=myPoS;User Id=sa; Password=123;");
+                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=myPoS;User Id=sa; Password=Start777;");
             }
         }
 
@@ -65,63 +67,13 @@ namespace corepos.Entities
                     .HasConstraintName("FK_Customer_Person");
             });
 
-            modelBuilder.Entity<Order>(entity =>
+            modelBuilder.Entity<MeasurementUnit>(entity =>
             {
-                entity.Property(e => e.OrderId)
-                    .HasColumnName("orderId")
-                    .HasMaxLength(50)
-                    .ValueGeneratedNever();
+                entity.ToTable("measurementUnit");
 
-                entity.Property(e => e.CustomerId)
-                    .HasColumnName("customerId")
-                    .HasMaxLength(50);
+                entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.EmployeeId)
-                    .HasColumnName("employeeId")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.ShippedTo)
-                    .HasColumnName("shippedTo")
-                    .HasColumnType("text");
-            });
-
-            modelBuilder.Entity<OrderSub>(entity =>
-            {
-                entity.ToTable("Order_Sub");
-
-                entity.Property(e => e.OrderSubId)
-                    .HasColumnName("orderSubId")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.Discount)
-                    .HasColumnName("discount")
-                    .HasColumnType("decimal(18, 0)");
-
-                entity.Property(e => e.ItemId)
-                    .HasColumnName("item_id")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.OrderId)
-                    .HasColumnName("order_id")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Quantity)
-                    .HasColumnName("quantity")
-                    .HasColumnType("decimal(18, 0)");
-
-                entity.Property(e => e.UnitPrice)
-                    .HasColumnName("unit_price")
-                    .HasColumnType("decimal(18, 0)");
-
-                entity.HasOne(d => d.Item)
-                    .WithMany(p => p.OrderSub)
-                    .HasForeignKey(d => d.ItemId)
-                    .HasConstraintName("FK_Order_Sub_Item");
-
-                entity.HasOne(d => d.Order)
-                    .WithMany(p => p.OrderSub)
-                    .HasForeignKey(d => d.OrderId)
-                    .HasConstraintName("FK_Order_Sub_Order_Sub");
+                entity.Property(e => e.UnitName).HasMaxLength(10);
             });
 
             modelBuilder.Entity<Permision>(entity =>
@@ -209,11 +161,60 @@ namespace corepos.Entities
 
                 entity.Property(e => e.Description).HasColumnType("text");
 
-                entity.Property(e => e.Name).HasMaxLength(150);
+                entity.Property(e => e.Discount)
+                    .HasColumnName("discount")
+                    .HasColumnType("decimal(18, 0)");
 
-                entity.Property(e => e.RetailPrice).HasColumnType("decimal(18, 0)");
+                entity.Property(e => e.GroupId).HasColumnName("groupId");
 
-                entity.Property(e => e.WholeSalePrice).HasColumnType("decimal(18, 0)");
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(150);
+
+                entity.Property(e => e.PurchasePrice)
+                    .HasColumnName("purchasePrice")
+                    .HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.Quantity).HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.SalsePrice)
+                    .HasColumnName("salsePrice")
+                    .HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.SupplierId)
+                    .IsRequired()
+                    .HasColumnName("supplierId")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.UnitId).HasColumnName("unitId");
+
+                entity.HasOne(d => d.Group)
+                    .WithMany(p => p.Product)
+                    .HasForeignKey(d => d.GroupId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Product_ProductGroup");
+
+                entity.HasOne(d => d.Supplier)
+                    .WithMany(p => p.Product)
+                    .HasForeignKey(d => d.SupplierId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Product_Supplier");
+
+                entity.HasOne(d => d.Unit)
+                    .WithMany(p => p.Product)
+                    .HasForeignKey(d => d.UnitId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Product_measurementUnit");
+            });
+
+            modelBuilder.Entity<ProductGroup>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.GroupName)
+                    .IsRequired()
+                    .HasColumnName("groupName")
+                    .HasMaxLength(150);
             });
 
             modelBuilder.Entity<RoleUserMap>(entity =>
@@ -249,25 +250,88 @@ namespace corepos.Entities
                     .HasConstraintName("FK_RoleUserMap_posUser");
             });
 
-            modelBuilder.Entity<Stock>(entity =>
+            modelBuilder.Entity<SalesMain>(entity =>
             {
-                entity.Property(e => e.StockId)
-                    .HasColumnName("stock_id")
+                entity.HasKey(e => e.SalesId);
+
+                entity.Property(e => e.SalesId)
+                    .HasColumnName("salesId")
                     .HasMaxLength(50)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.ProductId)
-                    .IsRequired()
-                    .HasColumnName("product_id")
+                entity.Property(e => e.RefNo)
+                    .HasColumnName("refNo")
+                    .HasMaxLength(150);
+
+                entity.Property(e => e.TotalChangeAmount).HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.TotalDiscount).HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.TotalDue).HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.TotalReceive).HasColumnType("decimal(18, 0)");
+            });
+
+            modelBuilder.Entity<SalesSub>(entity =>
+            {
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.DiscountInAmount).HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.DiscountInPercentage).HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.ItemId)
+                    .HasColumnName("itemId")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Reorderlavel).HasColumnName("reorderlavel");
+                entity.Property(e => e.Quantity).HasColumnType("decimal(18, 0)");
 
-                entity.HasOne(d => d.Product)
-                    .WithMany(p => p.Stock)
-                    .HasForeignKey(d => d.ProductId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Item_Product");
+                entity.Property(e => e.SalseId).HasMaxLength(50);
+
+                entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.Vat).HasColumnType("decimal(18, 0)");
+
+                entity.HasOne(d => d.Item)
+                    .WithMany(p => p.SalesSub)
+                    .HasForeignKey(d => d.ItemId)
+                    .HasConstraintName("FK_SalesSub_Product");
+
+                entity.HasOne(d => d.Salse)
+                    .WithMany(p => p.SalesSub)
+                    .HasForeignKey(d => d.SalseId)
+                    .HasConstraintName("FK_SalesSub_SalesSub");
+            });
+
+            modelBuilder.Entity<Supplier>(entity =>
+            {
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasMaxLength(50)
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.CompanyAddress)
+                    .HasColumnName("companyAddress")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.CompanyName)
+                    .HasColumnName("companyName")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.CompanyPhone)
+                    .HasColumnName("companyPhone")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.PersonId)
+                    .HasColumnName("personId")
+                    .HasMaxLength(50);
+
+                entity.HasOne(d => d.Person)
+                    .WithMany(p => p.Supplier)
+                    .HasForeignKey(d => d.PersonId)
+                    .HasConstraintName("FK_Supplier_Person");
             });
 
             modelBuilder.Entity<UserPermision>(entity =>
